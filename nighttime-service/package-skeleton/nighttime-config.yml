@@ -1,0 +1,66 @@
+Required:
+  - SVDNB
+  # boats only
+  - GITCO 
+  - SVI05
+  - GDNBO
+  # nightfire only
+  - GMTCO
+  - IICMO
+  - SVM07
+  - SVM08
+  - SVM10
+  - SVM12
+  - SVM13
+  - SVM14
+  - SVM15
+  - SVM16
+Period: 30s
+Prefix: NPP
+WatchDir: /data
+SubDir: result
+OutputDir: /output
+Version: v23
+Pipeline:
+  Variables:
+    DetectBinary: /opt/nightfire/viirs_detect
+    FitBinary: /opt/nightfire/fit_binary
+    LiBinary: /opt/preprocess/ngdc_viirs_li
+    ReprojBinary: /opt/preprocess/ngdc_viirs_reproj_to_dnb
+    ReprojScript: /opt/reproject/reproject.sh
+    BoatsBinary: /opt/boats/boats_((.Version))
+    MapsDir: /opt/boats/mapfiles
+    detfile: ((.OutputDir))/VNFD_((.Id))_((.Version)).csv
+    fitfile: ((.OutputDir))/VNFF_((.Id))_((.Version)).csv
+    lifile: ((.OutputDir))/((.GDNBO_Name)).h5_li
+    reprojfile: ((.OutputDir))/((.SVI05_Name)).dspace_rad
+  Steps:
+    # nightfire steps
+    - ((.DetectBinary)) ((.SVM10)) -output ((.detfile)) -cloud 0
+    - |
+      ((.FitBinary)) ((.detfile)) -output ((.fitfile)) -plot 1
+        -map 1 -localmax 1 -size 100 -font 10
+    # boats steps
+    - ((.LiBinary)) ((.GDNBO)) ((.lifile))
+    - |
+      ((.ReprojBinary)) ((.SVI05)) ((.SVDNB)) ((.reprojfile))
+        -data_name All_Data/VIIRS_I5-SDR_All/Radiance
+        -run_line ((.ReprojScript))
+    - |
+      ((.BoatsBinary)) ((.SVDNB))
+        ((.MapsDir))/NCEI_NGA.union.nga_lead.coast
+        ((.MapsDir))/World_EEZ/World_EEZ_v8_2014_HR.shp
+        ((.MapsDir))/VNF-VBD_npp_20120301-20151231_global_asia-enhanced_c201607211230.bitmask
+        -mpa ((.MapsDir))/restricted_area_category/restricted_area.shp
+        -fmz ((.MapsDir))/wpp_merge/wpp_merge.shp
+        -ltz ((.MapsDir))/World_time_zones/timezone.shp
+        -rlp ((.MapsDir))/platforms/VBD_npp_20150101-20151231_asia_qf1_2_v10_c201606091557.pct.platforms_lat_lon.merged.ver20170330.shp
+        -rlv ((.MapsDir))/coastline/bridges.shp
+        -tai ((.MapsDir))/World_time_zones/tai-utc.dat
+        -saa ((.MapsDir))/saa/SAA_zone_2015_a.shp
+        -vnf ((.fitfile))
+        -coverage 1 -i05 1 -dump 0 -checkpoint 0 -meta 1
+        -plot 0 -localmax 1 -lightning 24 -strict 0 -si 0.4
+        -input ((.OutputDir))
+        -output ((.OutputDir))
+

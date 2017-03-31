@@ -1,0 +1,19 @@
+ENVI
+description = {
+  Band Math Result, Expression = [b1+b2+b2] B1:Band Math
+  (b1ne1):NCEI_NGA.union.nga_lead.2kmp1.rec B2:Band Math
+  (b1ne1):NCEI_NGA.union.nga_lead.1kmp1.rec [Fri May 20 14:17:48 2016]}
+samples = 86401
+lines   = 43201
+bands   = 1
+header offset = 0
+file type = ENVI Standard
+data type = 1
+interleave = bsq
+sensor type = Unknown
+byte order = 0
+map info = {Geographic Lat/Lon, 1.0000, 1.0000, -180.00208333, 90.00208477, 4.1666667000e-03, 4.1666667000e-03, WGS-84, units=Degrees}
+coordinate system string = {GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]]}
+wavelength units = Unknown
+band names = {
+ Band Math (b1+b2+b2)}

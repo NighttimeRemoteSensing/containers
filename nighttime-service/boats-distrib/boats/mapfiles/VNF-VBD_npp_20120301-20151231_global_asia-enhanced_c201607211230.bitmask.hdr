@@ -1,0 +1,19 @@
+ENVI
+description = {
+  bit0 -> flare in global flare mask OR any QF4 detect 2012-2015
+  bit1 -> locations of likely false QF1 VBD detects (drawn by Elvidge)
+  bit2 -> locations of likely false QF2-QF3 VBD detects (drawn by Elvidge)
+}
+samples = 86401
+lines   = 43201
+bands   = 1
+header offset = 0
+file type = ENVI Standard
+data type = 1
+interleave = bsq
+sensor type = Unknown
+map info = {Geographic Lat/Lon, 1.5, 1.5, -180.00000, 90.000000,    0.0041666667,    0.0041666667}
+Mosaic input files = {
+ VNF_npp_20120301-missing9mo2013-20150831_global_mergedcfg_v10_c201510251320.pct_m10fire.mask
+ VNF-VBD_npp_20120301-20151231_asia_flares.mask
+}
