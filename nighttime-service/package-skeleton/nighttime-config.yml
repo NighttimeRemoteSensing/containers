@@ -24,7 +24,7 @@ Version: v23
 Pipeline:
   Variables:
     DetectBinary: /opt/nightfire/viirs_detect
-    FitBinary: /opt/nightfire/fit_binary
+    FitBinary: /opt/nightfire/viirs_fit
     LiBinary: /opt/preprocess/ngdc_viirs_li
     ReprojBinary: /opt/preprocess/ngdc_viirs_reproj_to_dnb
     ReprojScript: /opt/reproject/reproject.sh
